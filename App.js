@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Tempo } from './Components/previsao';
 import Api from './Components/Api';
+
 
 export default function App() {
   const [dados, setDados] = useState("");
 
   const [cidade, setCidade] = useState('São Paulo')
   async function carregaDados(){
-    const response = await Api.get(`weather?array_limit=1&fields=only_results,temp,city_name,description,time,wind_speedy,forecast,max,min,date&key=7e7569c9&city_name=${cidade},SP`)
-    setDados(response.data);
+    const response = await Api.get(`weather?array_limit=10&fields=only_results,temp,city_name,description,time,wind_speedy,forecast,max,min,date&key=c6186edf&city_name=${cidade},SP`)
+    setDados(response.data.forecast);
   
   }
 
@@ -55,7 +56,23 @@ export default function App() {
 
       </View>
       <View style={styles.blocos}>
-        <Tempo  data={dados}/>
+        {/**
+         * <Tempo  data={dados}/>
+         */}
+        <FlatList
+          data={dados}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.tempo}>
+                <Text>Data: {item.date}</Text>
+                <Text>Max: {item.max}</Text>
+                <Text>Min: {item.min}</Text>
+                <Text>Min: {item.description}</Text>
+              </View>
+            );
+          }}
+        
+        />
       </View>
     </View>
   );
@@ -67,6 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  tempo:{
+    marginLeft: '10%',
+    marginBottom: 10
   },
   textoTitulo: {
     fontSize: 40,
