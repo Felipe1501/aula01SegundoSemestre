@@ -19,7 +19,7 @@ export default function App() {
   } 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.header}>
         <Text style={styles.textoTitulo}>PREVISÃO DO TEMPO DATENA</Text>
         <View style={styles.imgs}>
         <Image
@@ -55,7 +55,7 @@ export default function App() {
         </TouchableOpacity>
 
       </View>
-      <View style={styles.blocos}>
+      
         {/**
          * <Tempo  data={dados}/>
          */}
@@ -74,7 +74,7 @@ export default function App() {
         
         />
       </View>
-    </View>
+    
   );
 }
 
@@ -93,6 +93,9 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
     color: '#4281F5',
+  },
+  header: {
+    margin: 50
   },
   imgg:{
     width: 120,
